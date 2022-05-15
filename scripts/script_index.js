@@ -1,4 +1,8 @@
-setTimeout(testData, 2500)
+document.onreadystatechange = function () {
+  if (document.readyState == 'complete') {
+    setTimeout(testData, 2500)
+  }
+}
 
 function testData(){
   if (readData("cardsData") != null) {
