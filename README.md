@@ -4,9 +4,10 @@ A Card exchange website, originally for a school club's project design(seen card
 这个是一个类似于卡片交换的程序, 一开始是一个我给社团做的设计(参见design文件夹中的cards.sketch). 为了我的计算机科学导论课程的大作业, 所以我打算把它做成网页的形式. (如果可以的话)
 
 ## Features (i want to make)
-[x] Store Card data locally 本地储存卡片信息
-[ ] Sharing via QR Code 二维码分享卡片
-[ ] Make the localStorage more like a DataBase 让本地储存的信息更加像个数据库
+- [x] Store Card data locally 本地储存卡片信息
+- [ ] One-click to Delete the DataBase 一键删除本地数据库 (Now you have to delete yourself in browser's storage controller panel. 现在你需要自己在游览器的localStorage里面手动删除数据)
+- [ ] Sharing via QR Code 二维码分享卡片
+- [ ] Make the localStorage more like a DataBase 让本地储存的信息更加像个数据库
 
 ## Log
 **[2022/5/15]** Basic outline has been done, (probably most of the design has been finished). Although QR Code sharing is not allowed yet, which means to manually input the raw data. 
