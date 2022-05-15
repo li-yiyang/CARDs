@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>CARDs : Collections</title>
+
+  
+  <link rel="stylesheet" type="text/css" href="../styles/styles_main.css">
+  <link rel="stylesheet" type="text/css" href="../styles/styles_collectors.css">
+  
+  <script src="../scripts/script_main.js"></script>
+  <script src="../scripts/script_collectors.js"></script>
+</head>
+
+<body>
+  <div id="background">
+    <div class="head_bars">
+      <div style="margin-left: 4.2vh; margin-top: 12.4vh; margin-bottom: 1.5vh;">
+      <span class="icon floating_char" style="color: #DB7B51;">C</span><span 
+      class="icon floating_char" style="color: #FBC74A;">A</span><span 
+      class="icon floating_char" style="color: #4972CC;">R</span><span 
+      class="icon floating_char" style="color: #995BBD;">D</span><span 
+      class="icon floating_char" style="font-size: 2.58vh;">s</span>
+    </div>
+    </div>
+    <div class="bottom_button_box">
+      <div class="bottom_button_text">Add</div>
+      <div>
+        <div class="input_tag">
+          <span>Name: </span><br>
+          <input id="name" class="input_line" placeholder="New Name" required>
+        </div>
+        <div class="input_tag">
+          <span>ID: </span><br>
+          <input id="id" class="input_line" placeholder="New Id" required>
+        </div>
+        <div class="input_tag">
+          <span>Motto: </span><br>
+          <input id="moto" class="input_line" placeholder="The Motto">
+        </div>
+        <div style="height: 5.00vh;"></div>
+        <button id="middle_button" class="middle_button" onclick="addCard();">Make Me a Card</button>
+        <div style="height: 5.00vh; text-align: center; margin-top: 1vh; height: 3vh; margin-bottom: 1vh;">or</div>
+        <button class="middle_button" onclick="scanQRCode">QRCode</button>
+      </div>
+    </div>
+    <div class="card_collections" id="collections">
+      <div style="text-align: center;">there is no card here. </div>
+      
+      <div class="card" onclick="expandCard('0');" id="card_no_0">
+        <div class="info_name">
+          Name
+        </div>
+        <div class="info_icon">
+          <img src="../resources/icon.jpg">
+        </div>
+        <div class="info_moto">
+          Motto
+        </div>
+        <div class="background_img">
+          <img src="../resources/background.jpg">
+        </div>
+      </div>
+      <div class="card" onclick="expandCard('1');" id="card_no_1">
+        <div class="info_name">
+          Name
+        </div>
+        <div class="info_icon">
+          <img src="../resources/icon.jpg">
+        </div>
+        <div class="info_moto">
+          Motto
+        </div>
+        <div class="background_img">
+          <img src="../resources/background.jpg">
+        </div>
+      </div>
+      <div class="card" onclick="expandCard('2');" id="card_no_2">
+        <div class="info_name">
+          Name
+        </div>
+        <div class="info_icon">
+          <img src="../resources/icon.jpg">
+        </div>
+        <div class="info_moto">
+          Motto
+        </div>
+        <div class="background_img">
+          <img src="../resources/background.jpg">
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

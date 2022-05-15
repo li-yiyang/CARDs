@@ -1,0 +1,151 @@
+.head_bars {
+  background-color: white;
+  width: 46.2vh;
+  height: 20vh;
+  top: -10vh;
+
+  position: absolute;
+  z-index: 1;
+
+  border-radius: 2.5vh;
+  box-shadow: 0 -7px 33px 20px rgba(44,64,71,0.11);
+  
+  transition: 1s;
+}
+
+.head_bars:hover {
+  margin-top: 1vh;
+  transition: 1s;
+}
+
+.icon {
+  font-family: 'SF Pro Bold';
+  font-size: 4.38vh;
+}
+
+.icon:hover {
+  transform: translateY(0.25vh);
+  transition: 0.3s;
+}
+
+.icon:hover + .icon {
+  transform: translateY(0.10vh);
+}
+
+.card_collections {
+  top: 10.63vh;
+
+  width: 46.19vh;
+
+  border-radius: 0 0 4.98vh 4.98vh;
+
+  position: relative;
+}
+
+.card {
+  width: 40.25vh;
+  height: 27.25vh;
+  margin-top: 2vh;
+  margin-left: 2.84vh;
+  box-shadow: 0 0.47vh 3.32vh 0 rgba(0, 0, 0, 0.15);
+  border-radius: 4.98vh;
+  background-color: #D8D8D8;
+  position: relative;
+  transition: 1s;
+  overflow: hidden;
+}
+
+.card:active {
+  height: 50.67vh
+}
+
+.info_name {
+  font-family: 'SF Pro Medium';
+  font-size: 3.79vh;
+  
+  position: absolute;
+  margin-left: 4.86vh;
+  top: 4.98vh;
+  /*z-index: 1;*/
+}
+
+.info_moto {
+  font-size: 1.18vh;
+
+  position: absolute;
+  margin-left: 5.09vh;
+  width: 16.59vh;
+  top: 10.31vh;
+  /*z-index: 1;*/
+}
+
+.info_icon {
+  border-radius: 9.24vh;
+  height: 9.24vh;
+  width: 9.24vh;
+  background-color: #4D4D4D;
+
+  box-shadow: 0 0.24vh 1.18vh 0 rgba(0, 0, 0, 0.13);
+  /*box-shadow: inset 0 0 3.2vh 0 rgba(44,64,71,0.08)*/
+  ;
+
+  position: absolute;
+  top: 3.36vh;
+  left: 27.96vh;
+
+  overflow: hidden;
+  /*z-index: 1;*/
+}
+
+.info_icon img {
+  width: 100%;
+}
+
+.edit_box {
+  position: absolute;
+  top: 12.60vh;
+  left: -2.96vh;
+}
+
+.background_img img {
+  object-fit: cover;
+  width: 40.25vh;
+  height: 60.67vh;
+  /*filter: blur(0.0001vh);*/
+  /*z-index: 1;*/
+}
+
+.bottom_button_box {
+  height: 400vh;
+  width: 44.79vh;
+  left: 0.71vh;
+  top: 84.67vh;
+  z-index: 2;
+
+  position: absolute;
+  
+  background: #CDE1E4;
+  box-shadow: 0 0.24vh 1.18vh 0 rgba(44,64,71,0.08), inset 0 0 3.20vh 0 rgba(44,64,71,0.08);
+  border-radius: 3.4vh;
+  transition: 0.5s;
+}
+
+.bottom_button_box:hover {
+  top: 19.67vh;
+  background: white;
+  transition: background 0.8s;
+  transition: top 1s;
+}
+
+.bottom_button_box:hover .bottom_button_text {
+  color: #CDE1E4;
+  transition: 1.2s;
+}
+
+.bottom_button_text {
+  font-family: 'SF Pro Medium';
+  font-size: 2.73vh;
+  text-align: center;
+  margin-top: 1.30vh;
+  margin-bottom: 1.3vh;
+}
