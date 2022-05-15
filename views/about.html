@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      CARDs : About
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="../styles/styles_main.css">
+    <link rel="stylesheet" type="text/css" href="../styles/styles_welcome.css">
+
+    <script src="../scripts/script_main.js"></script>
+
+    <style>
+      .option {
+        font-size: 2.73vh;
+        text-align: center;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+        cursor: pointer;
+        transition: 1s;
+      }
+      
+      .option:hover {
+        margin-top: 2.5vh;
+        transition: 1s;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="background">
+      <div style="height: 11.00vh;"></div>
+      <div id="main_title" style="font-size: 8.65vh; ">
+        <span class="floating_char" style="color: #DB7B51;">A</span><span class="floating_char"
+        style="color: #FBC74A;">b</span><span class="floating_char"
+        style="color: #4972CC;">o</span><span class="floating_char"
+        style="color: #995BBD;">u</span><span class="floating_char"
+        style="color: #494949">t</span>
+      </div>
+      <div style="color: #C9C9C9; text-align: center; font-size: 1.90vh">v.0.0.0</div>
+      <div style="height: 11.00vh;"></div>
+      <div onclick="alert('A Card exchange website, originally for a school club\'s project design, see cards.sketch file in design folder. And would be used as my computer science introduction class\'s final work, if my teacher permitted... \n这个是一个类似于卡片交换的程序, 一开始是一个我给社团做的设计, 参见design文件夹中的cards.sketch. 为了我的计算机科学导论课程的大作业, 所以我打算把它做成网页的形式. 如果可以的话\n作者: 凉凉')" style="color: #DB7B51;" class="option">
+        关于
+      </div>
+      <div onclick="alert('目前还没做好, 甚至这个提示框我都觉得太丑了, 以后会换掉的... ')" style="color: #FBC74A;" class="option">
+        设置
+      </div>
+      <div onclick="alert('点击ADD增加新的卡片, 点击卡片和别人交换. \n目前的卡片逻辑比较混乱, 需要第二次修改, 嗯. ')" style="color: #4972CC" class="option">
+        帮助
+      </div>
+      <div onclick="initializeCardsData(); alert('🪣💨👍')" style="color: #995BBD;" class="option">
+        删库跑路
+      </div>
+      <div onclick="document.location.replace('./collectors.html')" style="color: #494949;" class="option">
+        返回
+      </div>
+    </div>
+  </body>
+</html>

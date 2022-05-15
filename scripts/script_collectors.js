@@ -134,7 +134,7 @@ function addACardToCardCollection(cardDataArrayIdex) {
         <div class="info_moto">
           ${cardDataArray[cardDataArrayIdex][motoIndex]}
         </div>
-        <div class="edit_box" style="opacity: 0%;">
+        <div class="edit_box" hidden>
           <div class="input_tag">
             <span>Icon URL</span>
             <input id="icon_url_${cardDataArrayIdex}" class="input_line" placeholder="${cardDataArray[cardDataArrayIdex][iconIndex]}">
@@ -178,17 +178,25 @@ function expandCard(id) {
   card = document.getElementById('card_no_'+id);
   //if (card.offsetHeight > card.offsetWidth * 1.05) {
     card.setAttribute('style', 'height: 60.67vh');
-    card.getElementsByClassName("edit_box")[0].setAttribute("style", "opacity: 100%;");
+    card.getElementsByClassName("edit_box")[0].hidden = false;
   //}
+  console.log('expand');
 }
 
 function foldCard(id) {
   card = document.getElementById('card_no_'+id);
   if (card.offsetHeight > card.offsetWidth * 1.33) {
     card.setAttribute('style', '');
-    card.getElementsByClassName("edit_box")[0].setAttribute("style", "opacity: 0%;");
+    card.getElementsByClassName("edit_box")[0].hidden = true;
   }
   console.log('fold');
+}
+
+function foldCardForce(id) {
+  card = document.getElementById('card_no_'+id);
+  card.setAttribute('style', '');
+  card.getElementsByClassName("edit_box")[0].hidden = true;
+  console.log('flod');
 }
 
 function fadeIn(element) {
@@ -196,11 +204,37 @@ function fadeIn(element) {
 }
 
 function updateAtomData(id) {
-  let icon_url = document.getElementById(`icon_url_${id}`).value;
-  let background_url = document.getElementById(`background_url_${id}`).value;
+  let icon_url = document.getElementById(`icon_url_${id}`);
+  let background_url = document.getElementById(`background_url_${id}`);
+  if (icon_url.value.trim() == "" || background_url.value.trim() == "") {
+    if (icon_url.value.trim() == "") {
+      icon_url.setAttribute("style", "background: #EEFCD6;");
+      icon_url.setAttribute("placeholder", "Make You A Random Icon...");
+      setTimeout((function () {
+        icon_url.setAttribute("style", "");
+        icon_url.setAttribute("placeholder", "Icon URL");
+        icon_url.value = getRandomPictureURL(300, 300, 'people');
+      }), 1000);
+    }
+    if (background_url.value.trim() == "") {
+      background_url.setAttribute("style", "background: #EEFCD6;");
+      background_url.setAttribute("placeholder", "Make You A Random Background...");
+      setTimeout((function () {
+        background_url.setAttribute("style", "");
+        background_url.setAttribute("placeholder", "Background URL");
+      }), 1000);
+      background_url.value = getRandomPictureURL(300, 400);
+    }
+  } else {
+    cardDataArray[id][iconIndex] = icon_url.value;
+    cardDataArray[id][bgIndex] = background_url.value;
 
-  cardDataArray[id][iconIndex] = icon_url;
-  cardDataArray[id][bgIndex] = background_url;
-  
-  refreshWindow();
+    document.getElementById(`card_no_${id}`).focus();
+    refreshWindow();
+  }
+}
+
+// this function use the unsplash educational api to get a random photo
+function getRandomPictureURL(width, height, keywords = "") {
+  return `https://source.unsplash.com/random/${width}x${height}/?${keywords}`;
 }
