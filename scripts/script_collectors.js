@@ -121,10 +121,10 @@ function calculateOffsetAfter(i, selectedCardIndex) {
   return 39.71 * Math.sin(baseAngle + (i - selectedCardIndex) * (Math.PI - baseAngle) / (readData("cardsData") - selectedCardIndex));
 }
 */
-
+  
 function addACardToCardCollection(cardDataArrayIdex) {
   collectionsView.innerHTML += `
-  <div class="card" onclick="expandCard('${cardDataArrayIdex}');" id="card_no_${cardDataArrayIdex}" tabindex="${cardDataArrayIdex}" onblur="foldCard('${cardDataArrayIdex}');">
+  <div class="card" onmouseleave="foldCard('${cardDataArrayIdex}');" onclick="switchCard('${cardDataArrayIdex}');" id="card_no_${cardDataArrayIdex}" style="height: 27.25vh;">
         <div class="info_name">
           ${cardDataArray[cardDataArrayIdex][nameIndex]}
         </div>
@@ -134,7 +134,34 @@ function addACardToCardCollection(cardDataArrayIdex) {
         <div class="info_moto">
           ${cardDataArray[cardDataArrayIdex][motoIndex]}
         </div>
-        <div class="edit_box" hidden>
+        <div class="qr_code_box" hidden>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=${makeQRCodeData(cardDataArrayIdex)}&size=150x150&color=4D4D4D&bgcolor=FFFEF6">
+        </div>
+        <div class="background_img">
+          <img src="${cardDataArray[cardDataArrayIdex][bgIndex]}"> 
+        </div>
+      </div>
+  `
+}
+
+// use the qr-code-api
+function makeQRCodeData(cardDataArrayIdex) {
+  return encodeURIComponent(`["${cardDataArray[cardDataArrayIdex][nameIndex]}","${cardDataArray[cardDataArrayIdex][idIndex]}","${cardDataArray[cardDataArrayIdex][motoIndex]}","${cardDataArray[cardDataArrayIdex][bgIndex]}","${cardDataArray[cardDataArrayIdex][iconIndex]}","${cardDataArray[cardDataArrayIdex][nextIndex]}"]`);
+}
+
+function _OLD_addACardToCardCollection(cardDataArrayIdex) {
+  collectionsView.innerHTML += `
+  <div class="card" onmouseup="expandCard('${cardDataArrayIdex}');" onmouseleave="foldCard('${cardDataArrayIdex}');" id="card_no_${cardDataArrayIdex}" tabindex="${cardDataArrayIdex}" onblur="foldCard('${cardDataArrayIdex}');" style="top: -${cardDataArrayIdex * 20 + 3}vh;" onhover="floatingCard('${cardDataArrayIdex}');">
+        <div class="info_name">
+          ${cardDataArray[cardDataArrayIdex][nameIndex]}
+        </div>
+        <div class="info_icon">
+          <img src="${cardDataArray[cardDataArrayIdex][iconIndex]}">
+        </div>
+        <div class="info_moto">
+          ${cardDataArray[cardDataArrayIdex][motoIndex]}
+        </div>
+        <div class="qr_code_box" hidden>
           <div class="input_tag">
             <span>Icon URL</span>
             <input id="icon_url_${cardDataArrayIdex}" class="input_line" placeholder="${cardDataArray[cardDataArrayIdex][iconIndex]}">
@@ -174,28 +201,32 @@ function _OLD_addACardToCardCollection(collectionsView, i, offset) {
   </div>`
 }
 
+function switchCard(id) {
+  card = document.getElementById('card_no_' + id);
+  if (card.style.height == '27.25vh') {
+    expandCard(id);
+  } else if (card.style.height == '60.75vh') {
+    foldCard(id);
+  }
+}
+
 function expandCard(id) {
-  card = document.getElementById('card_no_'+id);
-  //if (card.offsetHeight > card.offsetWidth * 1.05) {
-    card.setAttribute('style', 'height: 60.67vh');
-    card.getElementsByClassName("edit_box")[0].hidden = false;
-  //}
-  console.log('expand');
+  card = document.getElementById('card_no_' + id);
+  card.setAttribute('style', 'height: 60.75vh');
+  card.getElementsByClassName("qr_code_box")[0].hidden = false;
 }
 
 function foldCard(id) {
-  card = document.getElementById('card_no_'+id);
-  if (card.offsetHeight > card.offsetWidth * 1.33) {
-    card.setAttribute('style', '');
-    card.getElementsByClassName("edit_box")[0].hidden = true;
-  }
+  card = document.getElementById('card_no_' + id);
+  card.setAttribute('style', 'height: 27.25vh;');
+  card.getElementsByClassName("qr_code_box")[0].hidden = true;
   console.log('fold');
 }
 
 function foldCardForce(id) {
   card = document.getElementById('card_no_'+id);
   card.setAttribute('style', '');
-  card.getElementsByClassName("edit_box")[0].hidden = true;
+  card.getElementsByClassName("qr_code_box")[0].hidden = true;
   console.log('flod');
 }
 

@@ -51,17 +51,16 @@
   border-radius: 4.98vh;
   background-color: #D8D8D8;
   position: relative;
-  transition: 1s;
+  transition: 0.8s;
   overflow: hidden;
-}
-
-.card:active {
-  height: 50.67vh
 }
 
 .info_name {
   font-family: 'SF Pro Medium';
   font-size: 3.79vh;
+  width: 16.59vh;
+  text-align: start;
+  overflow: hidden;
   
   position: absolute;
   margin-left: 4.86vh;
@@ -69,8 +68,20 @@
   /*z-index: 1;*/
 }
 
+.info_id {
+  font-size: 0.28vh;
+  text-align: justify;
+
+  position: absolute;
+  margin-left: 5.09vh;
+  width: 16.59vh;
+  top: 8.81vh;
+  /*z-index: 1;*/
+}
+
 .info_moto {
-  font-size: 1.18vh;
+  font-size: 1.88vh;
+  text-align: justify;
 
   position: absolute;
   margin-left: 5.09vh;
@@ -101,10 +112,21 @@
   width: 100%;
 }
 
-.edit_box {
+.qr_code_box {
   position: absolute;
-  top: 12.60vh;
-  left: -2.96vh;
+  width: 32vh;
+  height: 32vh;
+  top: 24vh;
+  left: 4.3vh;
+  background-color: #4D4D4D;
+  border-radius: 2vh;
+  overflow: hidden;
+  box-shadow: 0 0.24vh 1.18vh 0 rgba(44,64,71,0.08), inset 0 0 3.20vh 0 rgba(44,64,71,0.48);
+}
+
+.qr_code_box img {
+  width: 100%;
+  height: 100%;
 }
 
 .background_img img {
