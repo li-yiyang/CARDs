@@ -41,7 +41,7 @@ document.onreadystatechange = function () {
 
       // the following code from https://webkit.org/blog/10855/async-clipboard-api/
       // to fit the browser is a difficult thing...
-      document.getElementById("bottom_button_box").addEventListener("click", async clickEvent => {
+      document.getElementById("bottom_button_text").addEventListener("click", async clickEvent => {
         let items = await navigator.clipboard.read();
         for (let item of items) {
             if (!item.types.includes("text/plain"))
@@ -169,6 +169,7 @@ function addDataByDataString(dataString) {
       if (atomData[nameIndex] != cardDataArray[i][nameIndex] && 
           atomData[idIndex] != cardDataArray[i][idIndex] && confirm('In your clickboard, there seem to be a new CARDs data, would you add it? ')) {
         cardDataArray.push(atomData);
+        addConent(atomData[nameIndex], atomData[idIndex], atomData[motoIndex], atomData[nextIndex], atomData[bgIndex], atomData[iconIndex]);
         refreshWindow();
         // console.log('yes')
         return true;
