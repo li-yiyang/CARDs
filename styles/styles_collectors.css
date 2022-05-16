@@ -122,6 +122,7 @@
   border-radius: 2vh;
   overflow: hidden;
   box-shadow: 0 0.24vh 1.18vh 0 rgba(44,64,71,0.08), inset 0 0 3.20vh 0 rgba(44,64,71,0.48);
+  cursor: pointer;
 }
 
 .qr_code_box img {

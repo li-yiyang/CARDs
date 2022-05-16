@@ -1,3 +1,10 @@
+// version
+let cardsVersionNumber = '0.0.0';
+
+function readCARDsVersion() {
+  return readData("cardsVersion");
+}
+
 // Data I/O
 
 let readData = readDataByLocalStorage;
@@ -127,7 +134,7 @@ function addaCard() {
     setTimeout((function () {
       moto.setAttribute("style", ""); 
       moto.setAttribute("placeholder", "Whatever You Like.");
-      moto.value = "Anything"
+      moto.value = structProcesser();
     }), 1000);
   } else {
     let result = addConent(name.value, id.value, moto.value);
@@ -137,4 +144,91 @@ function addaCard() {
     return result;
   }
   return false;
+}
+
+/*
+  The following code is to generate a random sentence. 
+  This script was inspired by PAIP's first chapter, 
+  you can see it in my book Magic the Book: 
+  https://github.com/li-yiyang/magic_the_book
+  In my blog, i make it in Ruby, but I write it in js this time. 
+*/
+
+let sentenceIndex = 0; 
+let subjectIndex = 1; // equal to objectIndex
+let verbIndex = 2;
+let objectIndex = 3;
+let prepIndex = 4;
+let adjAlt = 5;
+let prepSubjectAltIndex = 6;
+let nounIndex = 7;
+let adjIndex = 8;
+
+// the following update should only update the struct of sentence... maybe
+structDataOfSentence = [
+  [subjectIndex, verbIndex, objectIndex], // sentence index: 0
+
+  [objectIndex, prepSubjectAltIndex], // subject index: 1
+
+  [[
+    '想', '爱', '写', '讨厌', '喜欢', '打', 
+    '攻击', '杀', '抱', '缠', '吃', '追'
+  ]], // verb index: 2
+
+  [adjAlt, nounIndex], // object index: 3
+
+  [[
+    '和', '在', '与', '并', '或'
+  ]], // prepIndex: 4
+
+  [[
+    '', // no adj
+    adjIndex, // adj index
+  ]], // adjAlt index: 5
+
+  [[
+    '', // no prep-noun structure
+    [prepIndex, objectIndex], // prep, adj*-noun
+  ]], // prep-noun* index 6
+
+  [[
+    '我', '你', '他', '她', '它', 
+    '猫', '狗', '外星人', '女生', '男生', 
+    '书本', '棉线', '论文', 'DDL', '困难', 
+    '飞机', '火车', 
+  ]], // nouns index: 7
+
+  [[
+    '可爱的', '漂亮的', '活泼的', '讨厌的', 
+    '倒霉的', '生气的', '幸福的', '温柔的', 
+    '好运的', '开心的', '不幸的', '暴力的', 
+    '人畜无害的', '一帆风顺的', '起起落落落的', 
+  ]] // adjIndex: 8
+]
+
+function structProcesser(structIndex = 0, structDataInput = structDataOfSentence) {
+  return structDataInput[structIndex].map(function (item) {
+    return processReadedData(item)
+  }).join('');
+}
+
+function randomItemOf(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function processReadedData(item) {
+  if (typeof item == "number") {
+    return structProcesser(item);
+  } else if (typeof item == "string") {
+    return item;
+  } else if (item instanceof Array) {
+    let getedItem = randomItemOf(item);
+    if (getedItem instanceof Array) {
+      return getedItem.map(function (itemOfGeted) {
+        return processReadedData(itemOfGeted);
+      }).join('');
+    } else {
+      return processReadedData(getedItem);
+    }
+  }
 }

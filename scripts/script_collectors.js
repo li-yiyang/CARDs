@@ -37,7 +37,24 @@ document.onreadystatechange = function () {
         } else if (event.deltaY < 0 && topPostion < document.getElementById('background').offsetHeight * 0.14) {
             collectionsView.style.top = parseFloat(collectionsView.style.top || 0) + rollingSpeed + 'vh';
         }
-      })
+      });
+
+      // the following code from https://webkit.org/blog/10855/async-clipboard-api/
+      // to fit the browser is a difficult thing...
+      document.getElementById("bottom_button_box").addEventListener("click", async clickEvent => {
+        let items = await navigator.clipboard.read();
+        for (let item of items) {
+            if (!item.types.includes("text/plain"))
+                continue;
+    
+            let reader = new FileReader;
+            reader.addEventListener("load", loadEvent => {
+                addDataByDataString(reader.result);
+            });
+            reader.readAsText(await item.getType("text/plain"));
+            break;
+        }
+    });
   }
 }
 
@@ -134,8 +151,8 @@ function addACardToCardCollection(cardDataArrayIdex) {
         <div class="info_moto">
           ${cardDataArray[cardDataArrayIdex][motoIndex]}
         </div>
-        <div class="qr_code_box" hidden>
-          <img src="https://api.qrserver.com/v1/create-qr-code/?data=${makeQRCodeData(cardDataArrayIdex)}&size=150x150&color=4D4D4D&bgcolor=FFFEF6">
+        <div class="qr_code_box" onclick="copyQRCodeData(${cardDataArrayIdex});" hidden>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?data=${makeQRCodeData(cardDataArrayIdex)}&size=150x150&color=4D4D4D&bgcolor=FFFEF6" title="复制信息">
         </div>
         <div class="background_img">
           <img src="${cardDataArray[cardDataArrayIdex][bgIndex]}"> 
@@ -144,9 +161,37 @@ function addACardToCardCollection(cardDataArrayIdex) {
   `
 }
 
+function addDataByDataString(dataString) {
+  console.log('test');
+  if (decodeURIComponent(dataString).match(/cards:\/\/\[".+",".+",".+",".+",".+"\]/)) {
+    let atomData = eval(decodeURIComponent(dataString).match(/\[.*\]/)[0]);
+    for (var i = 0; i < cardDataArray.length; i++) {
+      if (atomData[nameIndex] != cardDataArray[i][nameIndex] && 
+          atomData[idIndex] != cardDataArray[i][idIndex] && confirm('In your clickboard, there seem to be a new CARDs data, would you add it? ')) {
+        cardDataArray.push(atomData);
+        refreshWindow();
+        // console.log('yes')
+        return true;
+      }
+    }
+    // console.log('fail')
+    return false;
+  }
+}
+
+// I will get the data encrypted later if possible.
+function copyQRCodeData(cardDataArrayIdex) {
+  navigator.clipboard.writeText('cards://' + makeQRCodeData(cardDataArrayIdex));
+  alert("Copied The Data! ");
+}
+
+function makeRawData(cardDataArrayIdex) {
+  return `["${cardDataArray[cardDataArrayIdex][nameIndex]}","${cardDataArray[cardDataArrayIdex][idIndex]}","${cardDataArray[cardDataArrayIdex][motoIndex]}","${cardDataArray[cardDataArrayIdex][bgIndex]}","${cardDataArray[cardDataArrayIdex][iconIndex]}","${cardDataArray[cardDataArrayIdex][nextIndex]}"]`;
+}
+
 // use the qr-code-api
 function makeQRCodeData(cardDataArrayIdex) {
-  return encodeURIComponent(`["${cardDataArray[cardDataArrayIdex][nameIndex]}","${cardDataArray[cardDataArrayIdex][idIndex]}","${cardDataArray[cardDataArrayIdex][motoIndex]}","${cardDataArray[cardDataArrayIdex][bgIndex]}","${cardDataArray[cardDataArrayIdex][iconIndex]}","${cardDataArray[cardDataArrayIdex][nextIndex]}"]`);
+  return encodeURIComponent(makeRawData(cardDataArrayIdex));
 }
 
 function _OLD_addACardToCardCollection(cardDataArrayIdex) {

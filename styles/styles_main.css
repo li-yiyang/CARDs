@@ -65,6 +65,10 @@ body {
   transform: translateY(1vh);
 }
 
+.floating_char:active {
+  transform: translateY(1vh);
+}
+
 .input_tag {
   font-family: 'SF Pro';
   font-size: 2.37vh;

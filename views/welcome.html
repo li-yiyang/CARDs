@@ -18,11 +18,16 @@
     <div id="main_title">
       <span style="font-size: 3.08vh; color: #494949; line-height: 2.84vh;">Welcome</span>
       <br>
-      <span class="floating_char" style="font-size: 8.65vh; color: #DB7B51;">U</span><span class="floating_char"
-        style="font-size: 8.65vh; color: #FBC74A;">C</span><span class="floating_char"
-        style="font-size: 8.65vh; color: #4972CC;">A</span><span class="floating_char"
-        style="font-size: 8.65vh; color: #995BBD;">S</span><span class="floating_char"
-        style="font-size: 2.84vh; color: #494949">ers</span>
+      <span class="floating_char" style="font-size: 8.65vh; color: #DB7B51; cursor: pointer;" onclick="playANote('u')" onmouseleave="pauseANote('u')">U</span><span class="floating_char"
+        style="font-size: 8.65vh; color: #FBC74A; cursor: pointer;" onclick="playANote('c')" onmouseleave="pauseANote('c')">C</span><span class="floating_char"
+        style="font-size: 8.65vh; color: #4972CC; cursor: pointer;" onclick="playANote('a')" onmouseleave="pauseANote('a')">A</span><span class="floating_char"
+        style="font-size: 8.65vh; color: #995BBD; cursor: pointer;" onclick="playANote('s')" onmouseleave="pauseANote('s')">S</span><span class="floating_char"
+        style="font-size: 2.84vh; color: #494949; cursor: pointer;" onclick="playANote('ers')" onmouseleave="pauseANote('ers')">ers</span>
+      <audio src="../resources/notes/orange.mp3" id="note_u" type="audio/mpeg"></audio>
+      <audio src="../resources/notes/yellow.mp3" id="note_c" type="audio/mpeg"></audio>
+      <audio src="../resources/notes/blue.mp3" id="note_a" type="audio/mpeg"></audio>
+      <audio src="../resources/notes/purple.mp3" id="note_s" type="audio/mpeg"></audio>
+      <audio src="../resources/notes/dark.mp3" id="note_ers" type="audio/mpeg"></audio>
     </div>
     <div style="height: 4.00vh;"></div>
     <div>
