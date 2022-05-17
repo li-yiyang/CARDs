@@ -20,6 +20,7 @@ var cardsDataEndTag = "";
 var cardDataArray = [];
 var collectionPosition = 0;
 var collectionsView = null;
+var lastTouchPositionY = 0;
 
 document.onreadystatechange = function () {
   if (document.readyState == 'complete') {
@@ -32,28 +33,55 @@ document.onreadystatechange = function () {
       var topPostion = collectionsView.offsetTop;
       var bottomPostion = topPostion + collectionsView.offsetHeight;
 
-        if (event.deltaY > 0 && bottomPostion > document.getElementById('background').offsetHeight * 0.9) {
-            collectionsView.style.top = parseFloat(collectionsView.style.top || 0) - rollingSpeed + 'vh';
-        } else if (event.deltaY < 0 && topPostion < document.getElementById('background').offsetHeight * 0.14) {
-            collectionsView.style.top = parseFloat(collectionsView.style.top || 0) + rollingSpeed + 'vh';
-        }
-      });
+      if (event.deltaY > 0 && bottomPostion > document.getElementById('background').offsetHeight * 0.9) {
+        collectionsView.style.top = parseFloat(collectionsView.style.top || 0) - rollingSpeed + 'vh';
+      } else if (event.deltaY < 0 && topPostion < document.getElementById('background').offsetHeight * 0.14) {
+        collectionsView.style.top = parseFloat(collectionsView.style.top || 0) + rollingSpeed + 'vh';
+      }
+    });
 
-      // the following code from https://webkit.org/blog/10855/async-clipboard-api/
-      // to fit the browser is a difficult thing...
-      document.getElementById("bottom_button_text").addEventListener("click", async clickEvent => {
-        let items = await navigator.clipboard.read();
-        for (let item of items) {
-            if (!item.types.includes("text/plain"))
-                continue;
-    
-            let reader = new FileReader;
-            reader.addEventListener("load", loadEvent => {
-                addDataByDataString(reader.result);
-            });
-            reader.readAsText(await item.getType("text/plain"));
-            break;
+    // mobie touch
+    document.getElementById("collections").addEventListener('touchstart',
+      function (event) {
+        if (event.touches.length == 1) {
+          lastTouchPositionY = event.touches[0].clientY;
+          console.log(lastTouchPositionY);
+          return true;
+        } else {
+          return false;
         }
+      })
+
+    document.getElementById("collections").addEventListener('touchmove', function (event) {
+      var topPostion = collectionsView.offsetTop;
+      var bottomPostion = topPostion + collectionsView.offsetHeight;
+      if (event.touches.length == 1) {
+        let deltaY = lastTouchPositionY - event.touches[0].clientY;
+        event.preventDefault();
+        if (deltaY > 0 && bottomPostion > document.getElementById('background').offsetHeight * 0.9) {
+          collectionsView.style.top = parseFloat(collectionsView.style.top || 0) - rollingSpeed + 'vh';
+        } else if (deltaY < 0 && topPostion < document.getElementById('background').offsetHeight * 0.14) {
+          collectionsView.style.top = parseFloat(collectionsView.style.top || 0) + rollingSpeed + 'vh';
+        }
+        lastTouchPositionY = event.touches[0].clientY;
+      }
+    })
+
+    // the following code from https://webkit.org/blog/10855/async-clipboard-api/
+    // to fit the browser is a difficult thing...
+    document.getElementById("bottom_button_text").addEventListener("click", async clickEvent => {
+      let items = await navigator.clipboard.read();
+      for (let item of items) {
+        if (!item.types.includes("text/plain"))
+          continue;
+
+        let reader = new FileReader;
+        reader.addEventListener("load", loadEvent => {
+          addDataByDataString(reader.result);
+        });
+        reader.readAsText(await item.getType("text/plain"));
+        break;
+      }
     });
   }
 }
@@ -61,7 +89,7 @@ document.onreadystatechange = function () {
 function updateData() {
   cardsDataEndTag = readData("cardsData");
 
-  if (cardsDataEndTag == "" || cardsDataEndTag == 0) {document.location.replace("./welcome.html")}
+  if (cardsDataEndTag == "" || cardsDataEndTag == 0) { document.location.replace("./welcome.html") }
 
   var i = 0;
   while (i < cardsDataEndTag) {
@@ -82,9 +110,9 @@ function readAtomData(i) {
 }
 
 function deleteDataAt(i) {
-  if (i == 0) {return false; }
+  if (i == 0) { return false; }
   let j = cardDataArray.findIndex(element => element[nextIndex] == i);
-  if (j == -1) {return false;}
+  if (j == -1) { return false; }
   writeData(`next_no_${cardDataArray[j - 1][nextIndex]}`, String(cardDataArray[j + 1][nextIndex]));
   cardDataArray[j][nextIndex] = `${i}`;
   localStorage.removeItem(`name_no_${i}`);
@@ -102,20 +130,20 @@ function refreshWindow() {
   for (var i = 0; i < cardDataArray.length; i++) {
     addACardToCardCollection(i);
   }
-/*
-  for (var i = 0; i < selectedCardIndex; i++) {
-    offset = calculateOffsetBefore(i, collectionPosition);
-    addACardToCardCollection(collectionsView, i, offset);
-  }
-  offset = calculateOffsetAt(collectionPosition);
-  addACardToCardCollection(collectionPosition);
-  for (i = selectedCardIndex; i < dataLength; i++) {
-    offset = calculateOffsetAfter(i, collectionPosition);
-    console.log(offset);
-    console.log(i);
-    addACardToCardCollection(collectionPosition, i, offset);
-  }
-*/
+  /*
+    for (var i = 0; i < selectedCardIndex; i++) {
+      offset = calculateOffsetBefore(i, collectionPosition);
+      addACardToCardCollection(collectionsView, i, offset);
+    }
+    offset = calculateOffsetAt(collectionPosition);
+    addACardToCardCollection(collectionPosition);
+    for (i = selectedCardIndex; i < dataLength; i++) {
+      offset = calculateOffsetAfter(i, collectionPosition);
+      console.log(offset);
+      console.log(i);
+      addACardToCardCollection(collectionPosition, i, offset);
+    }
+  */
 }
 
 // Now I use the sine and cosine function to draw the cards. 
@@ -138,7 +166,7 @@ function calculateOffsetAfter(i, selectedCardIndex) {
   return 39.71 * Math.sin(baseAngle + (i - selectedCardIndex) * (Math.PI - baseAngle) / (readData("cardsData") - selectedCardIndex));
 }
 */
-  
+
 function addACardToCardCollection(cardDataArrayIdex) {
   collectionsView.innerHTML += `
   <div class="card" onmouseleave="foldCard('${cardDataArrayIdex}');" onclick="switchCard('${cardDataArrayIdex}');" id="card_no_${cardDataArrayIdex}" style="height: 27.25vh;">
@@ -147,6 +175,9 @@ function addACardToCardCollection(cardDataArrayIdex) {
         </div>
         <div class="info_icon">
           <img src="${cardDataArray[cardDataArrayIdex][iconIndex]}">
+        </div>
+        <div class="info_id">
+          ${cardDataArray[cardDataArrayIdex][idIndex]}
         </div>
         <div class="info_moto">
           ${cardDataArray[cardDataArrayIdex][motoIndex]}
@@ -166,8 +197,8 @@ function addDataByDataString(dataString) {
   if (decodeURIComponent(dataString).match(/cards:\/\/\[".+",".+",".+",".+",".+"\]/)) {
     let atomData = eval(decodeURIComponent(dataString).match(/\[.*\]/)[0]);
     for (var i = 0; i < cardDataArray.length; i++) {
-      if (atomData[nameIndex] != cardDataArray[i][nameIndex] && 
-          atomData[idIndex] != cardDataArray[i][idIndex] && confirm('In your clickboard, there seem to be a new CARDs data, would you add it? ')) {
+      if (atomData[nameIndex] != cardDataArray[i][nameIndex] &&
+        atomData[idIndex] != cardDataArray[i][idIndex] && confirm('In your clickboard, there seem to be a new CARDs data, would you add it? ')) {
         cardDataArray.push(atomData);
         addConent(atomData[nameIndex], atomData[idIndex], atomData[motoIndex], atomData[nextIndex], atomData[bgIndex], atomData[iconIndex]);
         refreshWindow();
@@ -270,14 +301,14 @@ function foldCard(id) {
 }
 
 function foldCardForce(id) {
-  card = document.getElementById('card_no_'+id);
+  card = document.getElementById('card_no_' + id);
   card.setAttribute('style', '');
   card.getElementsByClassName("qr_code_box")[0].hidden = true;
   console.log('flod');
 }
 
 function fadeIn(element) {
-  
+
 }
 
 function updateAtomData(id) {
@@ -314,4 +345,8 @@ function updateAtomData(id) {
 // this function use the unsplash educational api to get a random photo
 function getRandomPictureURL(width, height, keywords = "") {
   return `https://source.unsplash.com/random/${width}x${height}/?${keywords}`;
+}
+
+function scanQRCode() {
+  
 }

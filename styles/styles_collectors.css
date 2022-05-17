@@ -58,7 +58,7 @@
 .info_name {
   font-family: 'SF Pro Medium';
   font-size: 3.79vh;
-  width: 16.59vh;
+  width: 19.59vh;
   text-align: start;
   overflow: hidden;
   
@@ -69,11 +69,11 @@
 }
 
 .info_id {
-  font-size: 0.28vh;
+  font-size: 1.28vh;
   text-align: justify;
 
   position: absolute;
-  margin-left: 5.09vh;
+  margin-left: 5.39vh;
   width: 16.59vh;
   top: 8.81vh;
   /*z-index: 1;*/
