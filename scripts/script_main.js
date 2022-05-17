@@ -1,5 +1,13 @@
 // version
-let cardsVersionNumber = '0.0.0';
+let cardsVersionNumber = 'v0.0.1';
+
+// Data Struct
+let nameIndex = 0;
+let idIndex = 1;
+let motoIndex = 2;
+let bgIndex = 3;
+let iconIndex = 4;
+let nextIndex = 5;
 
 function readCARDsVersion() {
   return readData("cardsVersion");
@@ -77,6 +85,15 @@ function readDataByCookies(choose) {
   the no.0 is the user's infomation and can 
   not be deleted. (other than delete the data
   base itself)
+
+  it should be notice that: 
+ nameIndex = 0;
+ idIndex = 1;
+ motoIndex = 2;
+ bgIndex = 3;
+ iconIndex = 4;
+ nextIndex = 5;
+  which suffer me a lot... really. 
 */
 
 function writeData(key, value) {
@@ -86,7 +103,7 @@ function writeData(key, value) {
 function initializeCardsData() {
   localStorage.clear();
   // Spcifiy the version of CARDs
-  writeData("cardsVersion", "0.0.1");
+  writeData("cardsVersion", cardsVersionNumber);
   writeData("cardsData", "0");
 }
 
@@ -97,7 +114,7 @@ function testDataInit() {
   }
 }
 
-function addConent(name, id, moto, next = -1, bg = "../resources/background.jpg", icon = "../resources/icon.jpg") {
+function addConent(name, id, moto, bg = "../resources/background.jpg", icon = "../resources/icon.jpg", next = -1) {
   var dataIndex = readData("cardsData");
   if (next == -1) {next = Number(dataIndex) + 1 };
   writeData("name_no_" + dataIndex, name);
@@ -126,7 +143,7 @@ function addaCard() {
     id.setAttribute("placeholder", "Required");
     setTimeout((function () {
       id.setAttribute("style", "");
-      id.setAttribute("palceholder", "ID")
+      id.setAttribute("palceholder", "ID");
     }), 1000);
   } else if (moto.value.trim() == "") {
     moto.setAttribute("style", "background: #EEFCD6;");

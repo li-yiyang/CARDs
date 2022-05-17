@@ -8,12 +8,6 @@ function addCard() {
   }
 }
 
-let nameIndex = 0;
-let idIndex = 1;
-let motoIndex = 2;
-let bgIndex = 3;
-let iconIndex = 4;
-let nextIndex = 5;
 let rollingSpeed = 1.5;
 
 var cardsDataEndTag = "";
@@ -121,6 +115,8 @@ function deleteDataAt(i) {
   localStorage.removeItem(`bg_no_${i}`);
   localStorage.removeItem(`icon_no_${i}`);
   localStorage.removeItem(`next_no_${i}`);
+  cardDataArray = [].concat(cardDataArray.slice(0, j), cardDataArray.slice(j + 1, cardDataArray.length));
+  refreshWindow();
   return true;
 }
 
@@ -169,7 +165,7 @@ function calculateOffsetAfter(i, selectedCardIndex) {
 
 function addACardToCardCollection(cardDataArrayIdex) {
   collectionsView.innerHTML += `
-  <div class="card" onmouseleave="foldCard('${cardDataArrayIdex}');" onclick="switchCard('${cardDataArrayIdex}');" id="card_no_${cardDataArrayIdex}" style="height: 27.25vh;">
+  <div class="card" onmouseleave="foldCard('${cardDataArrayIdex}');" onclick="switchCard('${cardDataArrayIdex}');" id="card_no_${cardDataArrayIdex}" style="height: 27.25vh;" oncontextmenu="(function (event) {event.preventDefault(); if (confirm('Do you really want to delete this card? ')) { deleteDataAt(${Number(cardDataArray[cardDataArrayIdex][nameIndex])})} })(event)">
         <div class="info_name">
           ${cardDataArray[cardDataArrayIdex][nameIndex]}
         </div>
@@ -192,16 +188,22 @@ function addACardToCardCollection(cardDataArrayIdex) {
   `
 }
 
-function addDataByDataString(dataString) {
-  console.log('test');
+function addDataByDataString(dataString, doNotAskForConfirm = false) {
+  console.log(cardDataArray);
   if (decodeURIComponent(dataString).match(/cards:\/\/\[".+",".+",".+",".+",".+"\]/)) {
     let atomData = eval(decodeURIComponent(dataString).match(/\[.*\]/)[0]);
     for (var i = 0; i < cardDataArray.length; i++) {
-      if (atomData[nameIndex] != cardDataArray[i][nameIndex] &&
-        atomData[idIndex] != cardDataArray[i][idIndex] && confirm('In your clickboard, there seem to be a new CARDs data, would you add it? ')) {
-        cardDataArray.push(atomData);
-        addConent(atomData[nameIndex], atomData[idIndex], atomData[motoIndex], atomData[nextIndex], atomData[bgIndex], atomData[iconIndex]);
-        refreshWindow();
+      if (atomData[nameIndex] != cardDataArray[i][nameIndex] && atomData[idIndex] != cardDataArray[i][idIndex]) {
+          if (doNotAskForConfirm) {
+            alert('Successfully Added the data. ')
+            cardDataArray.push(atomData);
+            addConent(atomData[nameIndex], atomData[idIndex], atomData[motoIndex], atomData[nextIndex], atomData[bgIndex]);
+            refreshWindow();
+          } else if (confirm('In your clickboard, there seems to be a new CARDs data, would you add it? ')){
+            cardDataArray.push(atomData);
+            addConent(atomData[nameIndex], atomData[idIndex], atomData[motoIndex], atomData[nextIndex], atomData[bgIndex]);
+            refreshWindow();
+          }
         // console.log('yes')
         return true;
       }
@@ -347,6 +349,32 @@ function getRandomPictureURL(width, height, keywords = "") {
   return `https://source.unsplash.com/random/${width}x${height}/?${keywords}`;
 }
 
+var testDataToHoldResponse = null;
+
+// from https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
 function scanQRCode() {
-  
+  const formData = new FormData();
+  const qrCode = document.getElementById('choose_qr_img').files[0];
+
+  formData.append('MAX_FILE_SIZE', '1048576');
+  formData.append('file', qrCode);
+
+  fetch('http://api.qrserver.com/v1/read-qr-code/', {
+    method: 'POST',
+    body: formData,
+  }).then(response => {
+    // testDataToHoldResponse = response.clone();
+    return response.json(); 
+  })
+  .then(res => function (res){
+    testDataToHoldResponse = res;
+    if (res['0']['symbol']['0']['error'] == null) {
+      addACardToCardCollection("cards:\/\/" + String(res['0']['symbol']['0']['data']));
+      return true;
+    }
+    return false;
+  }(res))
+  .catch(error => {
+    console.log("Error", error);
+  })
 }

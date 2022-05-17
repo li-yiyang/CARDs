@@ -41,15 +41,19 @@
         <div style="height: 5.00vh;"></div>
         <button id="middle_button" class="middle_button" onclick="addCard();">Make Me a Card</button>
         <div style="height: 5.00vh; text-align: center; margin-top: 1vh; height: 3vh; margin-bottom: 1vh; font-size: 2vh;">or</div>
-        <button class="middle_button" onclick="scanQRCode">
-          QRCode
-        </button>
+        <label> <!-- get inspired by https://www.wfublog.com/2017/10/input-type-file-upload-css-skill.html -->
+          <div class="middle_button" id="choose_qr_code_button" onclick="document.getElementById('choose_qr_code_button').hidden = true; document.getElementById('submit_qr_code_button').hidden = false;"><div style="position: relative; top: 1.3vh">Choose QR Code</div></div>
+            <!-- MAX_FILE_SIZE (maximum file size in bytes) must precede the file input field used to upload the QR code image -->
+            <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
+            <!-- The "name" of the input field has to be "file" as it is the name of the POST parameter. Choose QR code image to read/scan:  -->
+            <input id="choose_qr_img" style="opacity: 0%; position: absolute; top: -10vh; left: -100vh;" name="file" type="file" accept=".jpg,.png,.gif">
+            <button class="middle_button" id="submit_qr_code_button" hidden onclick="document.getElementById('choose_qr_code_button').hidden = false; document.getElementById('submit_qr_code_button').hidden = true;scanQRCode();">Submit QRCode</button>
+        </label>
       </div>
     </div>
     <div class="card_collections" id="collections">
       <div style="text-align: center;">there is no card here. </div>
-      <!--
-      <div class="card" onmouseleave="foldCard('test');" onclick="switchCard('test');" id="card_no_test" style="height: 27.25vh;">
+      <div class="card" onmouseleave="foldCard('test');" onclick="switchCard('test');" id="card_no_test" style="height: 27.25vh;" oncontextmenu="(function (event) {event.preventDefault(); if (confirm('do you want to delete this card? ')) {} })(event)">
         <div class="info_name">Name</div>
         <div class="info_id">ISO 900</div>
         <div class="info_moto">The Motto</div>
@@ -58,7 +62,6 @@
         </div>
         <div class="info_icon"><img src="../resources/icon.jpg"></div>
       </div>
-      -->
     </div>
   </div>
 </body>
