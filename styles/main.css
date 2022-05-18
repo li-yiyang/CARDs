@@ -1,0 +1,391 @@
+@font-face {
+  font-family: 'SF Pro';
+  src: url('fonts/SF-Pro-Text-Regular.otf');
+}
+
+@font-face {
+  font-family: 'SF Pro Bold';
+  src: url('fonts/SF-Pro-Text-Bold.otf');
+}
+
+@font-face {
+  font-family: 'SF Pro Medium';
+  src: url('fonts/SF-Pro-Text-Medium.otf');
+}
+
+body {
+  color: #494949;
+  background-color: #EAE9E9;
+  font-family: 'SF Pro';
+}
+
+#background {
+  background-color: white;
+
+  width: 46.2vh;
+  height: 90vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  
+  border-radius: 4.98vh;
+  box-shadow: 0 0 3.32vh 0 #082C4047;
+  box-shadow: inset 0 0 2.25vh, 0 #0a000000;
+  
+  overflow: hidden;
+  position: relative;
+  
+  animation: fade_in 2s;
+  animation-iteration-count: 1;
+}
+
+.scene_card {
+  position: relative;
+  top: 0;
+  left: 0;
+
+  transition: 1s;
+}
+
+@keyframes fade_in{
+  from {
+    opacity: 0;
+    transform: translateY(5vh);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.floating_char {
+  cursor: default;
+  display: inline-block;
+  transition: 1s;
+}
+
+.floating_char:hover {
+  transform: translateY(2vh);
+  transition: 0.3s;
+}
+
+.floating_char:hover + .floating_char {
+  transform: translateY(1vh);
+}
+
+.floating_char:active {
+  transform: translateY(1vh);
+}
+
+.input_tag {
+  font-family: 'SF Pro';
+  font-size: 2.37vh;
+  line-height: 6.44vh;
+  color: #4D4D4D;
+
+  margin-left: 5.92vh;
+
+  transition: 1s;
+}
+
+.input_line {
+  font-family: 'SF Pro';
+  font-size: 2.37vh;
+  color: #ABABAB;
+
+  background: #EAE9E9;
+  box-shadow: inset 0 0 2.37vh 0 rgba(44, 64, 71, 0.08);
+  border-radius: 1.78vh;
+  outline-style: none;
+  border: 0;
+
+  height: 5.92vh;
+  width: 32.48vh;
+
+  padding-left: 2vh;
+  padding-right: 0vh;
+
+  transition: 0.5s;
+}
+
+.input_line:hover {
+  background: #D8D8D8;
+  transition: 0.2s;
+}
+
+.input_line:focus {
+  color: #4D4D4D;
+  background: #EBF2F3; /*#CDE1E4;*/
+  box-shadow: 0 0 2.37vh 0 rgba(44, 64, 71, 0.08);
+  transition: 0.5s;
+}
+
+.input_tag:focus-within {
+  color: #EBF2F3;
+  transition: 0.5s;
+}
+
+.middle_button {
+  color: #4D4D4D;
+  font-family: 'SF Pro';
+  font-size: 2.37vh;
+  text-align: center;
+
+  background: #CDE1E4;
+  box-shadow: 0 0 1.78vh 0 rgba(44, 64, 71, 0.08), inset 0 0 3.20vh 0 rgba(44, 64, 71, 0.10);
+  border-radius: 1.78vh;
+  border: 0;
+
+  width: 34.48vh;
+  height: 5.92vh;
+  margin-left: 5.92vh;
+  transition: 0.5s;
+}
+
+.middle_button:hover {
+  color: #C9C9C9;
+  background: #EBF2F3;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,0.15), inset 0 0 27px 0 rgba(44,64,71,0.08);
+  transition: 0.5s;
+}
+
+.middle_button:active {
+  color: #4D4D4D;
+  background: #CDE1E4;
+  transform: translateY(0.5vh);
+}
+
+/* title*/
+.big_title {
+  font-family: 'SF Pro Bold';
+  font-size: 10.85vh;
+  position: absolute;
+}
+
+.title {
+  font-family: 'SF Pro Bold';
+  font-size: 8.65vh;
+  top: 9.25vh;
+  left: 9.35vh;
+  position: absolute;
+}
+
+.floating_up_and_down_char {
+  cursor: default;
+  display: inline-block;
+
+  animation-name: up_and_down_floating_animate;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes up_and_down_floating_animate {
+  0% { transform: translateY(0.5vh);}
+  5% { transform: translateY(-0.5vh);}
+  50% { transform: translateY(1vh);}
+  95% { transform: translateY(0.5);}
+  100% { transform: translateY(0);}
+}
+
+/* For the loading scene: */
+.big_card {
+  width: 46.2vh;
+  height: 90vh;
+  position: absolute;
+  transform-origin: center;
+  transform: rotate(-50deg);
+  
+  border-radius: 4.98vh;
+  box-shadow: 0 0 3.32vh 0 #082C4047;
+  box-shadow: inset 0 0 2.25vh, 0 #0a000000;
+}
+
+/* For collectors scene */
+.icon {
+  font-family: 'SF Pro Bold';
+  font-size: 4.38vh;
+
+  cursor: pointer;
+}
+
+.icon:hover {
+  transform: translateY(0.5vh);
+}
+
+.head_bars {
+  background-color: white;
+  width: 46.2vh;
+  height: 80vh;
+  top: -70vh;
+
+  position: absolute;
+  z-index: 1;
+
+  border-radius: 2.5vh;
+  box-shadow: 0 -7px 33px 20px rgba(44,64,71,0.11);
+  
+  transition: 1s;
+}
+
+.option {
+  font-size: 2.73vh;
+  text-align: center;
+
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+
+  cursor: pointer;
+
+  transition: 1s;
+}
+
+.option:hover {
+  margin-top: 2.5vh;
+  transition: 1s;
+}
+
+.option:active {
+  margin-top: 2.25vh;
+  transition: 0.3s;
+}
+
+.main_board {
+  margin-top: 10vh;
+
+  position: absolute;
+}
+
+.card {
+  width: 40.25vh;
+  height: 27.25vh;
+  margin-top: 2vh;
+  margin-left: 2.84vh;
+  box-shadow: 0 0.47vh 3.32vh 0 rgba(0, 0, 0, 0.15);
+  border-radius: 4.98vh;
+  background-color: #D8D8D8;
+  position: relative;
+  transition: 0.8s;
+  overflow: hidden;
+}
+
+.card .info_name {
+  font-family: 'SF Pro Medium';
+  font-size: 3.79vh;
+  width: 19.59vh;
+  text-align: start;
+  overflow: hidden;
+  
+  position: absolute;
+  margin-left: 4.86vh;
+  top: 3.98vh;
+  /*z-index: 1;*/
+}
+
+.card .info_id {
+  font-size: 1.28vh;
+  text-align: justify;
+
+  position: absolute;
+  margin-left: 5.39vh;
+  width: 16.59vh;
+  top: 8.41vh;
+  /*z-index: 1;*/
+}
+
+.card .info_moto {
+  font-size: 1.88vh;
+  text-align: justify;
+
+  position: absolute;
+  margin-left: 5.09vh;
+  width: 16.59vh;
+  top: 10.31vh;
+  /*z-index: 1;*/
+}
+
+.card .info_icon {
+  border-radius: 9.24vh;
+  height: 9.24vh;
+  width: 9.24vh;
+  background-color: #4D4D4D;
+
+  box-shadow: 0 0.24vh 1.18vh 0 rgba(0, 0, 0, 0.13);
+  /*box-shadow: inset 0 0 3.2vh 0 rgba(44,64,71,0.08)*/
+  ;
+
+  position: absolute;
+  top: 3.36vh;
+  left: 27.96vh;
+
+  overflow: hidden;
+  /*z-index: 1;*/
+}
+
+.card .info_icon img {
+  width: 100%;
+}
+
+.card .qrcode {
+  position: absolute;
+  width: 32vh;
+  height: 32vh;
+  top: 24vh;
+  left: 4.3vh;
+  background-color: #4D4D4D;
+  border-radius: 2vh;
+  overflow: hidden;
+  box-shadow: 0 0.24vh 1.18vh 0 rgba(44,64,71,0.08), inset 0 0 3.20vh 0 rgba(44,64,71,0.48);
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.card .qrcode img {
+  width: 100%;
+  height: 100%;
+}
+
+.card .background_img img {
+  object-fit: cover;
+  width: 40.25vh;
+  height: 60.67vh;
+  /*filter: blur(0.0001vh);*/
+  /*z-index: 1;*/
+}
+
+.bottom_button_box {
+  height: 400vh;
+  width: 44.79vh;
+  left: 0.71vh;
+  top: 83.97vh;
+  z-index: 2;
+
+  position: absolute;
+
+  background: #CDE1E4;
+  box-shadow: 0 0.24vh 1.18vh 0 rgba(44,64,71,0.08), inset 0 0 3.20vh 0 rgba(44,64,71,0.08);
+  border-radius: 3.4vh;
+  transition: 0.5s;
+}
+
+.bottom_button_box:hover {
+  top: 19.67vh;
+  background: white;
+  transition: background 0.8s;
+  transition: top 1s;
+}
+
+.bottom_button_box:hover .bottom_button_text {
+  color: #CDE1E4;
+
+  cursor: pointer;
+
+  transition: 1.2s;
+}
+
+.bottom_button_text {
+  font-family: 'SF Pro Medium';
+  font-size: 2.73vh;
+  text-align: center;
+  margin-top: 1.30vh;
+  margin-bottom: 1.3vh;
+}
