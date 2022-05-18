@@ -383,7 +383,7 @@ function scanQRCode() {
   formData.append('MAX_FILE_SIZE', '1048576');
   formData.append('file', qrCode);
 
-  fetch('http://api.qrserver.com/v1/read-qr-code/', {
+  fetch('https://api.qrserver.com/v1/read-qr-code/', {
     method: 'POST',
     body: formData,
   }).then(response => {
@@ -409,7 +409,7 @@ document.onreadystatechange = function () {
   if (document.readyState == 'complete') {
     setTimeout(function () {
       changeSenceOfLoading(loadInitCardsData());
-    }, 500);
+    }, 2500);
 
     addWheelEvent();
     addMobieTouchEvent();
