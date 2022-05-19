@@ -329,6 +329,7 @@ function addWheelEvent() {
 }
 
 function addMobieTouchEvent() {
+  var collectionsView = document.getElementById("main_board");
   document.getElementById("main_board").addEventListener('touchstart',
       function (event) {
         if (event.touches.length == 1) {
